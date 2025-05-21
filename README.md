@@ -36,15 +36,14 @@
 ✅❌
 
 1. ✅**Разобраться со структурой проекта (onboarding)**
-2. ✅**Удалить социальные сети: vk, yandex. Easy task**
-
-> * Удалены кнопки из шаблонов    
-  -`resources/view/unauth/register.html`  
-  -`resources/view/login.html`
-> * Удалены классы  
-  `com.javarush.jira.login.internal.sociallogin.handler.YandexOAuth2UserDataHandler`   
-  `com.javarush.jira.login.internal.sociallogin.handler.VkOAuth2UserDataHandler`
-
+2. ✅**Удалить социальные сети: vk, yandex**
+   * Удалены кнопки из шаблонов 
+      - `resources/view/unauth/register.html`  
+      - `resources/view/login.html`
+   * Удалены классы  
+      - `com.javarush.jira.login.internal.sociallogin.handler.YandexOAuth2UserDataHandler`   
+      - `com.javarush.jira.login.internal.sociallogin.handler.VkOAuth2UserDataHandler`
+   * Почищен `application.yaml`
 3. **Вынести чувствительную информацию в отдельный проперти файл**  
 
 
