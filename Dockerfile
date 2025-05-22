@@ -2,6 +2,7 @@
 FROM maven:3.9.9-sapmachine-17 AS build
 WORKDIR /app
 COPY pom.xml .
+COPY lombok.config .
 RUN mvn dependency:go-offline
 COPY src ./src
 RUN mvn clean package -DskipTests
