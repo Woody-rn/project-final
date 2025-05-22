@@ -45,7 +45,7 @@
 3. ✅**Вынести чувствительную информацию в отдельный проперти файл**  
     
     Создан файл `application-secrets.yaml`  в котором используются переменные окружения в виде `${VARIABLE_NAME:default_value}`  
-    путь к файлу `src/main/resources/application-secrets.yaml`  <details><summary style="color: skyblue; text-decoration: underline;">Показать детали из файла</summary>![img.png](README_img/img.png)</details>
+    путь к файлу `src/main/resources/application-secrets.yaml`  <details><summary style="color: skyblue;">Показать скрин файла</summary>![img.png](README_img/img.png)</details>
 
 4. ❌**Переделать тесты так, чтоб во время тестов использовалась in memory БД (H2), а не PostgreSQL.**
 5. ❌**Написать тесты для всех публичных методов контроллера ProfileRestController**
@@ -53,7 +53,10 @@
    подход для работы с файловой системмой**
 7. ❌**Добавить новый функционал: добавления тегов к задаче (REST API + реализация на сервисе)**
 8. ❌**Добавить подсчет времени сколько задача находилась в работе и тестировании**
-9. ❌**Написать Dockerfile для основного сервера**
+9. ✅**Написать Dockerfile для основного сервера**  
+
+    ![img.png](README_img/img_dockerfile.png)
+
 10. ❌**Написать docker-compose файл для запуска контейнера сервера вместе с БД и nginx**
 11. ❌**Добавить локализацию минимум на двух языках для шаблонов писем (mails) и стартовой страницы index.html**
 12. ❌**Переделать механизм распознавания «свой-чужой» между фронтом и беком с JSESSIONID на JWT**
