@@ -154,6 +154,7 @@
             <artifactId>spring-modulith-docs</artifactId>
             <version>1.3.5</version>
         </dependency>
+
     </dependencies>
 
     <build>
