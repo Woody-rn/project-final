@@ -3,7 +3,7 @@
 ## Концепция:
 
 <details>
-<summary>Показать детали</summary>
+<summary style="color: skyblue;text-decoration: underline;">Показать детали</summary>
 
 - Spring Modulith
     - [Spring Modulith: достигли ли мы зрелости модульности](https://habr.com/ru/post/701984/)
@@ -45,7 +45,7 @@
 3. ✅**Вынести чувствительную информацию в отдельный проперти файл**  
     
     Создан файл `application-secrets.yaml`  в котором используются переменные окружения в виде `${VARIABLE_NAME:default_value}`  
-    путь к файлу `src/main/resources/application-secrets.yaml`  <details><summary>Показать детали из файла</summary>![img.png](README_img/img.png)</details>
+    путь к файлу `src/main/resources/application-secrets.yaml`  <details><summary style="color: skyblue; text-decoration: underline;">Показать детали из файла</summary>![img.png](README_img/img.png)</details>
 
 4. ❌**Переделать тесты так, чтоб во время тестов использовалась in memory БД (H2), а не PostgreSQL.**
 5. ❌**Написать тесты для всех публичных методов контроллера ProfileRestController**
