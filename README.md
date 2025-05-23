@@ -47,7 +47,11 @@
     Создан файл `application-secrets.yaml`  в котором используются переменные окружения в виде `${VARIABLE_NAME:default_value}`  
     путь к файлу `src/main/resources/application-secrets.yaml`  <details><summary style="color: skyblue;">Показать скрин файла</summary>![img.png](README_img/img.png)</details>
 
-4. ❌**Переделать тесты так, чтоб во время тестов использовалась in memory БД (H2), а не PostgreSQL.**
+4. ✅**Переделать тесты так, чтоб во время тестов использовалась in memory БД (H2), а не PostgreSQL.**  
+    Создан файл с измененным тестовым скриптом под БД H2 [src/main/resources/db/changelog_H2.sql](https://github.com/Woody-rn/project-final/blob/master/src/main/resources/db/changelog_H2.sql)  
+    Изменил [src/test/resources/application-test.yaml](https://github.com/Woody-rn/project-final/blob/master/src/test/resources/application-test.yaml) и не пришлось определять дополнительные бины  
+    В `AbstractControllerTest` поправил файл скрипта  
+    ![img.png](README_img/img_AbstractControllerTest.png)
 5. ✅**Написать тесты для всех публичных методов контроллера ProfileRestController**  
    [открыть ProfileRestControllerTest](https://github.com/Woody-rn/project-final/blob/nikitin/src/test/java/com/javarush/jira/profile/internal/web/ProfileRestControllerTest.java)  
     ![img.png](README_img/img_ProfileRestControllerTest.png)

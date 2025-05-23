@@ -3,8 +3,23 @@ spring:
   init:
     mode: always
   datasource:
-    url: jdbc:postgresql://localhost:5433/jira-test
-    username: jira
-    password: JiraRush
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;NON_KEYWORDS=VALUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
   jpa:
-    show-sql: false
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  liquibase:
+    changeLog: "classpath:db/changelog_H2.sql"
+
+logging:
+  level:
+    org.springframework.boot.autoconfigure.liquibase: DEBUG
+
+  #datasource:
+  #  url: jdbc:postgresql://localhost:5433/jira-test
+  #  username: jira
+  #  password: JiraRush
+  #jpa:
+  #  show-sql: false
