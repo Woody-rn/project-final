@@ -11,7 +11,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
 
   liquibase:
-    changeLog: "classpath:db/changelog_H2.sql"
+    changeLog: "classpath:changelog_H2.sql"
 
 logging:
   level:
