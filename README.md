@@ -65,7 +65,10 @@
 
     - ![img.png](README_img/img_dockerfile.png)
 
-10. ❌**Написать docker-compose файл для запуска контейнера сервера вместе с БД и nginx**
+10. ✅**Написать docker-compose файл для запуска контейнера сервера вместе с БД и nginx**  
+    - Открыть [docker-compose](https://github.com/Woody-rn/project-final/blob/nikitin/docker-compose.yaml)
+    - В `nginx.conf` заменены адреса с `localhost` на имя сервиса/контейнера приложения указанного в docker-compose `proxy_pass http://jira-app:8080;`
+    - Добавлен liquibase `changelog-master.xml` соединяющий создание структуры и добавление данных. [Путь к файлу](https://github.com/Woody-rn/project-final/tree/nikitin/src/main/resources/db)
 11. ❌**Добавить локализацию минимум на двух языках для шаблонов писем (mails) и стартовой страницы index.html**
 12. ❌**Переделать механизм распознавания «свой-чужой» между фронтом и беком с JSESSIONID на JWT**
 
