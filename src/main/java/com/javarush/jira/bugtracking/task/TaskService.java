@@ -21,6 +21,7 @@ import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import static com.javarush.jira.bugtracking.ObjectType.TASK;
 import static com.javarush.jira.bugtracking.task.TaskUtil.fillExtraFields;
@@ -139,5 +140,32 @@ public class TaskService {
         if (!userType.equals(possibleUserType)) {
             throw new DataConflictException(String.format(assign ? CANNOT_ASSIGN : CANNOT_UN_ASSIGN, userType, task.getStatusCode()));
         }
+    }
+
+    @Transactional
+    public void addTagToTask(Long taskId, Set<String> tags) {
+        TaskRepository repository = handler.getRepository();
+        Task task = repository.getExisted(taskId);
+        task.getTags().addAll(tags);
+        repository.save(task);
+    }
+
+    @Transactional(readOnly = true)
+    public Set<String> getTagsForTask(Long taskId) {
+        TaskRepository repository = handler.getRepository();
+        return repository.findByIdWithTags(taskId)
+                .map(Task::getTags)
+                .orElseThrow(() -> new NotFoundException("Task not found with id - " + taskId));
+    }
+
+    @Transactional
+    public void removeTag(long taskId, String tag) {
+        TaskRepository repository = handler.getRepository();
+        Task task = repository.getExisted(taskId);
+        Set<String> tags = task.getTags();
+        if (!tags.remove(tag)) {
+            throw new NotFoundException("Tag not found - " + tag);
+        }
+        repository.save(task);
     }
 }

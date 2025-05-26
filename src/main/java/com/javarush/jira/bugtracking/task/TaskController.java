@@ -10,23 +10,30 @@ import com.javarush.jira.bugtracking.task.to.TaskToFull;
 import com.javarush.jira.bugtracking.tree.ITreeNode;
 import com.javarush.jira.common.util.Util;
 import com.javarush.jira.login.AuthUser;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import static com.javarush.jira.common.BaseHandler.createdResponse;
 
 @Slf4j
+@Validated
 @RestController
 @RequestMapping(value = TaskController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
@@ -155,5 +162,38 @@ public class TaskController {
         public TaskTreeNode(TaskTo taskTo) {
             this(taskTo, new LinkedList<>());
         }
+    }
+
+
+    @PostMapping(path = "{taskId}/tags",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Add tags to task", description = "Add multiple tags to specified task")
+    @ApiResponse(responseCode = "204", description = "Tags successfully added")
+    @ApiResponse(responseCode = "404", description = "Task not found")
+    @ApiResponse(responseCode = "422", description = "Tags validation failed")
+    public void addTags(@PathVariable("taskId") long taskId,
+                        @Valid @NotEmpty @RequestBody Set<@Size(min = 2, max = 32) String> tags) {
+        taskService.addTagToTask(taskId, tags);
+    }
+
+
+    @GetMapping("{taskId}/tags")
+    @Operation(summary = "Get task tags", description = "Returns all tags for specified task")
+    @ApiResponse(responseCode = "200", description = "Success")
+    public Set<String> getTags(@PathVariable("taskId") long taskId) {
+        return taskService.getTagsForTask(taskId);
+    }
+
+
+    @DeleteMapping("{taskId}/tags/{tag}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Remove tag from task")
+    @ApiResponse(responseCode = "204", description = "Tag removed")
+    @ApiResponse(responseCode = "404", description = "Task or tag not found")
+    @ApiResponse(responseCode = "422", description = "Tag validation failed")
+    public void removeTag(@PathVariable("taskId") long taskId,
+                          @PathVariable("tag") @Size(min = 2, max = 32) String tag) {
+        taskService.removeTag(taskId, tag);
     }
 }

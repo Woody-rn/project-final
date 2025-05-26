@@ -31,8 +31,8 @@
 
 - https://habr.com/ru/articles/259055/
 
-## Список выполненных задач:
-задачи в процессе выполнения
+## Список выполненных задач: (задачи в процессе выполнения)
+
 1. ✅**Разобраться со структурой проекта (onboarding)**
 2. ✅**Удалить социальные сети: vk, yandex**
    * Удалены кнопки из шаблонов 
@@ -59,7 +59,12 @@
    подход для работы с файловой системмой**  
     - Код переписан [открыть FileUtil#upload](https://github.com/Woody-rn/project-final/blob/nikitin/src/main/java/com/javarush/jira/bugtracking/attachment/FileUtil.java)  
     ![img.png](README_img/img_FileUtil.png)
-7. ❌**Добавить новый функционал: добавления тегов к задаче (REST API + реализация на сервисе)**
+7. ✅**Добавить новый функционал: добавления тегов к задаче (REST API + реализация на сервисе)**  
+    - В `TaskController` добавлены методы `addTags`, `getTags`, `removeTag` и добавлена информация для Swagger. Также контроллер помечен `@Validated` для работы валидации  <details><summary style="color: skyblue;">Показать скрин контроллера</summary>![img.png](README_img/img_TaskController.png)</details>
+    - В `TaskService` добавлены методы `addTagToTask`, `getTagsForTask`, `removeTag`.  <details><summary style="color: skyblue;">Показать скрин сервиса</summary>![img.png](README_img/img_TaskService.png)</details>
+    - Так как в `Task` поле `tag` помечено как `@ElementCollection(fetch = FetchType.LAZY)` в репозитории `TaskRepository` добавлен метод для возврата задачи с загруженными тегами   
+    `@Query("SELECT t FROM Task t LEFT JOIN FETCH t.tags WHERE t.id = :taskId")`  
+    `Optional<Task> findByIdWithTags(Long taskId);`
 8. ❌**Добавить подсчет времени сколько задача находилась в работе и тестировании**
 9. ✅**Написать Dockerfile для основного сервера**  
 
