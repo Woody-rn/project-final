@@ -1,0 +1,67 @@
+.language-switcher-container {
+    display: inline-block;
+    padding: 6px;
+    border-radius: 24px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #f0f0f0; /* Светлая рамка */
+}
+
+.language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 18px;
+    padding: 2px;
+}
+
+.language-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 16px;
+    text-decoration: none;
+    color: #777;
+    transition: all 0.3s ease;
+    background-color: transparent;
+}
+
+.language-btn:hover {
+    background-color: #f0f0f0;
+    color: #555;
+}
+
+.language-btn.active {
+    background-color: #777;
+    color: #f0f0f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    font-weight: 500;
+}
+
+.flag-icon {
+    width: 16px;
+    height: 16px;
+    background-size: cover;
+    display: inline-block;
+}
+
+.flag-icon-en {
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MCAzMCI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTAgMGg2MHYzMEgweiIvPjxwYXRoIGZpbGw9IiNDODExMjIiIGQ9Ik0wIDBsNjAgMzBNNjAgMEwwIDMwIiBzdHJva2U9IiNDODExMjIiIHN0cm9rZS13aWR0aD0iNiIvPjwvc3ZnPg==');
+}
+
+.flag-icon-ru {
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MCAzMCI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTAgMGg2MHYxMEgweiIvPjxwYXRoIGZpbGw9IiMwMDM5QTciIGQ9Ik0wIDEwaDYwdjEwSDB6Ii8+PHBhdGggZmlsbD0iI0RGMjAyNCIgZD0iTTAgMjBoNjB2MTBIMHoiLz48L3N2Zz4=');
+}
+
+.separator {
+    color: #e0e0e0;
+    user-select: none;
+    font-weight: 300;
+}
+
+.language-text {
+    font-size: 14px;
+}

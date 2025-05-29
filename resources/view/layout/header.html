@@ -1,15 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <!--/*@thymesVar id="authUser" type="com.javarush.jira.login.AuthUser"*/-->
 
 <div th:fragment="header">
     <header class="fixed-top d-none d-md-block header-nav">
         <nav class="navbar navbar-expand-lg navbar-dark" id="header">
+
+            <div class="language-switcher">
+                <a href="./?lang=en"
+                   th:classappend="${#locale.language == 'en'} ? 'active'"
+                   class="language-btn">
+                    <span class="flag-icon flag-icon-en"></span>
+                    <span class="language-text">English</span>
+                </a>
+
+                <span class="separator">|</span>
+
+                <a href="./?lang=ru"
+                   th:classappend="${#locale.language == 'ru'} ? 'active'"
+                   class="language-btn">
+                    <span class="flag-icon flag-icon-ru"></span>
+                    <span class="language-text">Русский</span>
+                </a>
+            </div>
+
             <div class="container-fluid">
                 <div class="collapse navbar-collapse mt-2 mb-2 px-5">
                     <ul class="navbar-nav m-auto">
                         <form class="d-flex" role="search">
-                            <input aria-label="Search" class="form-control" id="header-search" placeholder="Search"
+                            <input aria-label="Search" class="form-control" id="header-search" th:placeholder="#{header.search.placeholder}"
                                    type="search">
                         </form>
                         <li class="nav-item menu-item me-3 ms-4">
@@ -17,7 +36,7 @@
                         </li>
                     </ul>
                     <div th:if="${authUser} == null">
-                        <a class="btn btn-orange" href="/view/login" type="button">Login/Register</a>
+                        <a class="btn btn-orange" href="/view/login" type="button"  th:text="#{header.login}">Login/Register</a>
                     </div>
                     <th:block th:if="${authUser} != null">
                         <a class="btn btn-orange" href="/ui/profile" type="button"><i

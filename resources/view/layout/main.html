@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="page"
           th:with="img=${img}?: 'https://javarush.com/assets/images/site/homepage/og-image-jr.jpg', descr=${descr}?: ${title}">
     <head>
+        <meta charset="UTF-8">
+
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
         <meta content="width=device-width, initial-scale=1" name="viewport">
         <meta name="title" th:content="${title}"/>
         <meta name="Description" th:content="${descr}"/>
 
         <title th:text="${title}"></title>
+        <link href="/static/css/my_lang.css" rel="stylesheet"/>
         <link href="/static/images/icon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
         <link href="/static/images/icon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
         <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>

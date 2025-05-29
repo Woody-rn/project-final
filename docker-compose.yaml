@@ -4,6 +4,8 @@ services:
     container_name: jira-app
     expose:
       - '8080'
+    env_file:
+      - secret.env
     environment:
       SPRING_PROFILES_ACTIVE: prod
       DB_URL: jdbc:postgresql://db-postgres:5432/jira
