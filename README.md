@@ -33,10 +33,7 @@
 
 ## Список выполненных задач: (задачи в процессе выполнения)
 
-> При регистрации аккаунта, должно отправляться письмо с подтверждением емайл, но предоставленный `test-mail: jira4jr@gmail.com`  
-и пароль видимо уже недоступны к использованию. Можно подключить свой ящик, если это `google`, то генерация пароля доступна  
-по [ссылке](https://myaccount.google.com/apppasswords) и создать `secret.env` c переменными как в `secret.env.example`
-Для запуска из под IDEA используем `Environment variables`
+> При регистрации аккаунта, должно отправляться письмо с подтверждением емайл, но предоставленный `test-mail: jira4jr@gmail.com` и пароль видимо уже недоступны к использованию. Можно подключить свой ящик, если это `google`, то генерация пароля доступна по [ссылке](https://myaccount.google.com/apppasswords) и создать `secret.env` c переменными как в `secret.env.example`. Для запуска из под IDEA используем `Environment variables`
 
 1. ✅**Разобраться со структурой проекта (onboarding)**
 2. ✅**Удалить социальные сети: vk, yandex**
@@ -84,7 +81,7 @@
     - Добавлены русский и английский языки для шаблонов `index.html`, `header.html`, `email-confirmation.html`, `password-reset.html`
         
     - Емайл `jira4jr@gmail.com` из проекта не работает, подключил свою почту для отправки писем при регистрации 
-    - В `MailService` в методе `getContent` была прибита русская локаль, использовал`Locale locale = LocaleContextHolder.getLocale();` для корректной работы интернационализации
+    - В `MailService` в методе `getContent` была прибита гвоздями русская локаль, использовал`Locale locale = LocaleContextHolder.getLocale();` для корректной работы интернационализации
     - Добавлен свичер языка в хедер
     - Добавлен конфигурационный класс `LocaleConfig.java`  
     ![img_3.png](README_img/img_LocaleConfig.png)
