@@ -31,11 +31,10 @@
 
 - https://habr.com/ru/articles/259055/
 
-## Список выполненных задач: (задачи в процессе выполнения)
-
-> При регистрации аккаунта, должно отправляться письмо с подтверждением емайл, но предоставленный `test-mail: jira4jr@gmail.com` и пароль видимо уже недоступны к использованию. Можно подключить свой ящик, если это `google`, то генерация пароля доступна по [ссылке](https://myaccount.google.com/apppasswords) и создать `secret.env` c переменными как в `secret.env.example`. Для запуска из под IDEA используем `Environment variables`
+## Список выполненных задач: 
 
 1. ✅**Разобраться со структурой проекта (onboarding)**
+   - > При регистрации аккаунта, должно отправляться письмо с подтверждением емайл, но предоставленный `test-mail: jira4jr@gmail.com` и пароль видимо уже недоступны к использованию. Можно подключить свой ящик, если это `google`, то генерация пароля доступна по [ссылке](https://myaccount.google.com/apppasswords). Создаем `secret.env` c переменными как в `secret.env.example`, а для запуска из под IDEA используем `Environment variables`
 2. ✅**Удалить социальные сети: vk, yandex**
    * Удалены кнопки из шаблонов 
       - `resources/view/unauth/register.html`  
@@ -86,7 +85,7 @@
 10. ✅**Написать docker-compose файл для запуска контейнера сервера вместе с БД и nginx**  
     - Открыть [docker-compose](https://github.com/Woody-rn/project-final/blob/nikitin/docker-compose.yaml)
     - В `nginx.conf` заменены адреса с `localhost` на имя сервиса/контейнера приложения указанного в docker-compose `proxy_pass http://jira-app:8080;`
-    - Добавлен liquibase `changelog-master.xml` соединяющий создание структуры и добавление данных. [Путь к файлу](https://github.com/Woody-rn/project-final/tree/nikitin/src/main/resources/db)
+    - Добавлен файл liquibase [`changelog-master.xml`](https://github.com/Woody-rn/project-final/tree/nikitin/src/main/resources/db) соединяющий создание структуры и добавление данных. 
 11. ✅**Добавить локализацию минимум на двух языках для шаблонов писем (mails) и стартовой страницы index.html**
     - Добавлены русский и английский языки для шаблонов `index.html`, `header.html`, `email-confirmation.html`, `password-reset.html`
         
