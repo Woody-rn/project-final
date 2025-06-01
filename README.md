@@ -3,7 +3,7 @@
 ## Концепция:
 
 <details>
-<summary style="color: skyblue;text-decoration: underline;">Показать детали</summary>
+<summary style="color: skyblue">Показать детали</summary>
 
 - Spring Modulith
     - [Spring Modulith: достигли ли мы зрелости модульности](https://habr.com/ru/post/701984/)
@@ -56,22 +56,32 @@
     - В `AbstractControllerTest` поправил файл скрипта  
     ![img.png](README_img/img_AbstractControllerTest.png)
 5. ✅**Написать тесты для всех публичных методов контроллера ProfileRestController**  
-   - [открыть ProfileRestControllerTest](https://github.com/Woody-rn/project-final/blob/nikitin/src/test/java/com/javarush/jira/profile/internal/web/ProfileRestControllerTest.java)  
+   - Тесты написаны [открыть ProfileRestControllerTest](https://github.com/Woody-rn/project-final/blob/nikitin/src/test/java/com/javarush/jira/profile/internal/web/ProfileRestControllerTest.java)  
     ![img.png](README_img/img_ProfileRestControllerTest.png)
 6. ✅**Сделать рефакторинг метода com.javarush.jira.bugtracking.attachment.FileUtil#upload чтоб он использовал современный
    подход для работы с файловой системмой**  
-    - Код переписан [открыть FileUtil#upload](https://github.com/Woody-rn/project-final/blob/nikitin/src/main/java/com/javarush/jira/bugtracking/attachment/FileUtil.java)  
-    ![img.png](README_img/img_FileUtil.png)
+    - Код переписан [открыть FileUtil#upload](https://github.com/Woody-rn/project-final/blob/nikitin/src/main/java/com/javarush/jira/bugtracking/attachment/FileUtil.java)
+    - `Files.createDirectories(dirPath)` автоматически создаёт все недостающие директории в пути
+    - `Files.write()` создает(если не существует) и перезаписывает файл, так же автоматически закрывает ресурсы
+    - ![img.png](README_img/img_FileUtil.png)
 7. ✅**Добавить новый функционал: добавления тегов к задаче (REST API + реализация на сервисе)**  
-    - В `TaskController` добавлены методы `addTags`, `getTags`, `removeTag` и добавлена информация для Swagger. Также контроллер помечен `@Validated` для работы валидации  <details><summary style="color: skyblue;">Показать скрин контроллера</summary>![img.png](README_img/img_TaskController.png)</details>
-    - В `TaskService` добавлены методы `addTagToTask`, `getTagsForTask`, `removeTag`.  <details><summary style="color: skyblue;">Показать скрин сервиса</summary>![img.png](README_img/img_TaskService.png)</details>
+    - В [`TaskController`](https://github.com/Woody-rn/project-final/blob/nikitin/src/main/java/com/javarush/jira/bugtracking/task/TaskController.java) добавлены методы `addTags`, `getTags`, `removeTag` и добавлена информация для Swagger. Также контроллер помечен `@Validated` для работы валидации  <details><summary style="color: skyblue;">Показать скрин контроллера</summary>![img.png](README_img/img_TaskController_7.png)</details>
+    - В [`TaskService`](https://github.com/Woody-rn/project-final/blob/nikitin/src/main/java/com/javarush/jira/bugtracking/task/TaskService.java) добавлены методы `addTagToTask`, `getTagsForTask`, `removeTag`.  <details><summary style="color: skyblue;">Показать скрин сервиса</summary>![img.png](README_img/img_TaskService.png)</details>
     - Так как в `Task` поле `tag` помечено как `@ElementCollection(fetch = FetchType.LAZY)` в репозитории `TaskRepository` добавлен метод для возврата задачи с загруженными тегами   
     `@Query("SELECT t FROM Task t LEFT JOIN FETCH t.tags WHERE t.id = :taskId")`  
     `Optional<Task> findByIdWithTags(Long taskId);`
-8. ❌**Добавить подсчет времени сколько задача находилась в работе и тестировании**
+8. ✅**Добавить подсчет времени сколько задача находилась в работе и тестировании**
+    - Создан `changelog-add-data-activity.sql` добавляющий три записи в таблицу ACTIVITY для задачи с id=99
+    - С заделом на будущее создан Enum [`StatusCode`](https://github.com/Woody-rn/project-final/blob/nikitin/src/main/java/com/javarush/jira/bugtracking/task/StatusCode.java)
+    - В репозитории добавлен метод возвращающий список всех записей активности для указанной задачи   
+      `@Query("SELECT a FROM Activity a where a.taskId =:taskId")`   
+      `List<Activity> findAllByTaskId(long taskId);`
+    - Добавлены endpoints в [`TaskController`](https://github.com/Woody-rn/project-final/blob/nikitin/src/main/java/com/javarush/jira/bugtracking/task/TaskController.java) 
+      `{taskId}/work-time` и `{taskId}/testing-time` возвращающие результат вычисления задачи в секундах  <details> <summary style="color: skyblue"> Показать детали</summary>![img_TaskController_8.png](README_img/img_TaskController_8.png) </details> 
+    - Добавлены методы в [`ActivityService`](https://github.com/Woody-rn/project-final/blob/nikitin/src/main/java/com/javarush/jira/bugtracking/task/ActivityService.java) для подсчета времени сколько задача находилась в работе и тестировании<details> <summary style="color: skyblue"> Показать детали</summary>![img_ActivityService.png](README_img/img_ActivityService.png) </details> 
 9. ✅**Написать Dockerfile для основного сервера**  
 
-    - ![img.png](README_img/img_dockerfile.png)
+    - ![img_dockerfile.png](README_img/img_dockerfile.png)
 
 10. ✅**Написать docker-compose файл для запуска контейнера сервера вместе с БД и nginx**  
     - Открыть [docker-compose](https://github.com/Woody-rn/project-final/blob/nikitin/docker-compose.yaml)
@@ -81,13 +91,11 @@
     - Добавлены русский и английский языки для шаблонов `index.html`, `header.html`, `email-confirmation.html`, `password-reset.html`
         
     - Емайл `jira4jr@gmail.com` из проекта не работает, подключил свою почту для отправки писем при регистрации 
-    - В `MailService` в методе `getContent` была прибита гвоздями русская локаль, использовал`Locale locale = LocaleContextHolder.getLocale();` для корректной работы интернационализации
+    - В [`MailService`](https://github.com/Woody-rn/project-final/blob/nikitin/src/main/java/com/javarush/jira/mail/MailService.java) в методе `getContent` была прибита гвоздями русская локаль, использовал`Locale locale = LocaleContextHolder.getLocale();` для корректной работы интернационализации
     - Добавлен свичер языка в хедер
-    - Добавлен конфигурационный класс `LocaleConfig.java`  
-    ![img_3.png](README_img/img_LocaleConfig.png)
-    ![img.png](README_img/img_en.png)
+    - Добавлен конфигурационный класс [`LocaleConfig.java`](https://github.com/Woody-rn/project-final/blob/nikitin/src/main/java/com/javarush/jira/common/internal/config/LocaleConfig.java) <details><summary style="color: skyblue">Показать детали</summary>![img_3.png](README_img/img_LocaleConfig.png)    ![img.png](README_img/img_en.png)
     ![img_1.png](README_img/img_ru.png)
-    ![img_2.png](README_img/img_mail.png)
+    ![img_2.png](README_img/img_mail.png)</details>
 12. ❌**Переделать механизм распознавания «свой-чужой» между фронтом и беком с JSESSIONID на JWT**
     Ещё не приступал, только изучил тематику
 

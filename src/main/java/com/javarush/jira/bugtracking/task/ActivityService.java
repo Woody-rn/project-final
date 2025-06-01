@@ -3,12 +3,18 @@ package com.javarush.jira.bugtracking.task;
 import com.javarush.jira.bugtracking.Handlers;
 import com.javarush.jira.bugtracking.task.to.ActivityTo;
 import com.javarush.jira.common.error.DataConflictException;
+import com.javarush.jira.common.error.NotFoundException;
 import com.javarush.jira.login.AuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import static com.javarush.jira.bugtracking.task.TaskUtil.getLatestValue;
 
@@ -72,5 +78,43 @@ public class ActivityService {
                 task.setTypeCode(latestType);
             }
         }
+    }
+
+    public Duration calculateWorkTime(Long id) {
+        return calculateTimeBetweenStatuses(id,
+                StatusCode.READY_FOR_REVIEW,
+                StatusCode.IN_PROGRESS
+        );
+    }
+
+    public Duration calculateTestTime(Long id) {
+        return calculateTimeBetweenStatuses(id,
+                StatusCode.DONE,
+                StatusCode.READY_FOR_REVIEW);
+    }
+
+    private Duration calculateTimeBetweenStatuses(Long id, StatusCode startStatus, StatusCode endStatus) {
+        List<Activity> activityList = handler.getRepository()
+                .findAllByTaskId(id);
+        LocalDateTime startTime = getLastStatusTime(activityList, startStatus.getStatusCode());
+        LocalDateTime endTime = getLastStatusTime(activityList, endStatus.getStatusCode());
+        if (endTime.isAfter(startTime)) {
+            throw new DataConflictException(
+                    endStatus + " time (" + endTime + ") is after " +
+                            startStatus + " time (" + startTime + ")");
+        }
+        return Duration.between(endTime, startTime);
+    }
+
+    private LocalDateTime getLastStatusTime(List<Activity> activityList, String statusCode) {
+        if (activityList.isEmpty()) {
+            throw new NotFoundException("No activities found or task not found");
+        }
+        return activityList.stream()
+                .filter(activity -> statusCode.equals(activity.getStatusCode()))
+                .map(Activity::getUpdated)
+                .filter(Objects::nonNull)
+                .max(LocalDateTime::compareTo)
+                .orElseThrow(() -> new NotFoundException("No " + statusCode + " status found"));
     }
 }

@@ -8,4 +8,5 @@
     <!-- Should be only links to per-version cumulative changelog files. -->
     <include file="changelog-init.sql" relativeToChangelogFile="true"/>
     <include file="changelog-data.sql" relativeToChangelogFile="true"/>
+    <include file="changelog-add-data-activity.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

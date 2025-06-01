@@ -25,10 +25,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.time.Duration;
+import java.util.*;
 
 import static com.javarush.jira.common.BaseHandler.createdResponse;
 
@@ -195,5 +193,29 @@ public class TaskController {
     public void removeTag(@PathVariable("taskId") long taskId,
                           @PathVariable("tag") @Size(min = 2, max = 32) String tag) {
         taskService.removeTag(taskId, tag);
+    }
+
+    @GetMapping("{taskId}/work-time")
+    @Operation(summary = "Get time spent in work status",
+            description = "Calculates duration between IN_PROGRESS and READY_FOR_REVIEW statuses")
+    @ApiResponse(responseCode = "200", description = "Duration calculated successfully")
+    @ApiResponse(responseCode = "404", description = "Task not found or required statuses missing")
+    @ApiResponse(responseCode = "409", description = "Time sequence conflict (end time before start time)")
+    public Map<String, Long> getWorkTime(@PathVariable("taskId") long taskId) {
+        log.info("Calculating work time for task {}", taskId);
+        Duration duration = activityService.calculateWorkTime(taskId);
+        return Map.of("seconds", duration.getSeconds());
+    }
+
+    @GetMapping("{taskId}/testing-time")
+    @Operation(summary = "Get time spent in testing status",
+            description = "Calculates duration between READY_FOR_REVIEW and DONE statuses")
+    @ApiResponse(responseCode = "200", description = "Duration calculated successfully")
+    @ApiResponse(responseCode = "404", description = "Task not found or required statuses missing")
+    @ApiResponse(responseCode = "409", description = "Time sequence conflict (end time before start time)")
+    public Map<String, Long> getTestingTime(@PathVariable("taskId") long taskId) {
+        log.info("Calculating testing time for task {}", taskId);
+        Duration duration = activityService.calculateTestTime(taskId);
+        return Map.of("seconds", duration.getSeconds());
     }
 }
